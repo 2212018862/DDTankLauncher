@@ -1,136 +1,101 @@
 # 弹弹堂登录器 (DDTank Launcher)
 
-基于 WPF (.NET 8) 的弹弹堂游戏登录器，支持 Flash 游戏运行、协议拦截、内存读取和多开。
+基于 WPF (.NET 10) 的弹弹堂游戏登录器，支持 Flash 游戏运行、账号管理和多开。
 
 ## 功能特性
 
-- ✅ Flash Player 集成（无需单独安装）
-- ✅ 4399 账号登录
-- ✅ 服务器选择
+- ✅ Flash Player 集成（绿色安装，无需单独安装）
+- ✅ 4399 账号登录（AES 加密密码）
+- ✅ 验证码处理
+- ✅ 账号管理（兼容36脚本大厅格式）
+- ✅ 分组管理（1-10小组）
+- ✅ 一键导入36脚本大厅账号
 - ✅ 多开支持
-- ✅ 协议拦截（开发中）
-- ✅ 内存读取（开发中）
-- ✅ 画面叠加层（开发中）
+- ✅ 游戏窗口类名：`MacromediaFlashPlayerActiveX`（脚本兼容）
 
 ## 环境要求
 
 - Windows 10/11
-- .NET 8 SDK（下载：https://dotnet.microsoft.com/download/dotnet/8.0）
+- .NET 10 SDK（下载：https://dotnet.microsoft.com/download/dotnet/10.0）
 
 ## 快速开始
 
-### 1. 安装 .NET 8 SDK
+### 1. 安装 .NET 10 SDK
 
 ```powershell
 # 检查是否已安装
 dotnet --version
-
-# 如果未安装，下载并安装：
-# https://dotnet.microsoft.com/download/dotnet/8.0
 ```
 
-### 2. 打开项目
+### 2. 克隆项目
 
-在 Trae 中打开项目目录：
-```
-C:\Users\22120\Desktop\DDTankLauncher
-```
-
-### 3. 还原依赖
-
-在 Trae 终端执行：
-```powershell
-dotnet restore
+```bash
+git clone https://github.com/2212018862/DDTankLauncher.git
+cd DDTankLauncher
 ```
 
-### 4. 运行项目
+### 3. 运行项目
 
 ```powershell
 dotnet run
 ```
 
-### 5. 发布项目
+### 4. 发布项目
 
 ```powershell
 dotnet publish -c Release -r win-x64 --self-contained
-```
-
-发布后的文件在：
-```
-bin\Release\net8.0-windows\win-x64\publish\
 ```
 
 ## 项目结构
 
 ```
 DDTankLauncher/
-├── Views/                    # 窗口界面
-│   ├── MainWindow.xaml       # 主窗口
-│   └── MainWindow.xaml.cs
-├── ViewModels/               # 视图模型（MVVM）
-├── Services/                 # 业务服务
-│   ├── GameLoginService.cs   # 游戏登录服务
-│   ├── ProtocolInterceptorService.cs  # 协议拦截
-│   ├── MemoryReaderService.cs        # 内存读取
-│   └── MultiInstanceManagerService.cs # 多开管理
-├── Helpers/                  # 工具类
-│   └── ResourceManager.cs    # 资源管理
-├── Resources/                # 资源文件
-│   └── flashplayer_sa.exe    # Flash Player（需手动放置）
-├── Properties/
-│   └── AssemblyInfo.cs
-├── App.xaml                  # 应用程序入口
-├── App.xaml.cs
-└── DDTankLauncher.csproj     # 项目文件
+├── Views/                          # 窗口界面
+│   ├── MainWindow.xaml/.cs         # 主窗口（账号列表、分组按钮）
+│   ├── AddAccountWindow.xaml/.cs   # 添加账号（含一键导入）
+│   ├── CaptchaWindow.xaml/.cs      # 验证码输入
+│   ├── FlashGameHost.cs            # Flash 游戏宿主
+│   └── ...
+├── Services/                       # 业务服务
+│   ├── AccountManager36.cs         # 账号管理（兼容36脚本大厅）
+│   ├── Login4399Service.cs         # 4399登录（AES加密）
+│   └── PasswordCrypto36.cs         # 密码加密
+├── Models/                         # 数据模型
+│   └── GameAccount.cs
+├── Resources/                      # 资源文件
+│   ├── flashplayer_sa.exe          # Flash Player
+│   ├── flash/
+│   │   ├── Flash64_34_0_0_323.ocx  # Flash.ocx (64位)
+│   │   └── Flash64.manifest        # 激活上下文清单
+│   └── Loading.swf                 # 游戏加载页面
+├── App.xaml/.cs                    # 应用程序入口
+└── DDTankLauncher.csproj           # 项目文件
 ```
 
-## 首次运行
+## 使用说明
 
-1. 将 `flashplayer_sa.exe` 放入 `Resources` 目录
-2. 运行 `dotnet run`
-3. 输入 4399 账号和密码
-4. 选择服务器
-5. 点击登录
+### 登录游戏
 
-## 开发说明
+1. 点击 **添加账号** 输入4399账号密码
+2. 或点击 **一键导入36脚本大厅账号**
+3. 双击账号卡片登录
 
-### 添加新服务
+### 分组管理
 
-1. 在 `Services` 目录创建新类
-2. 在 `MainWindow.xaml.cs` 中实例化并使用
+- 点击 **1-10** 按钮切换分组
+- 再次点击取消选中，显示全部账号
 
-### 修改界面
+### 发布打包
 
-1. 编辑 `Views/MainWindow.xaml`
-2. 修改样式和布局
+```powershell
+dotnet publish DDTankLauncher.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
+```
 
-### 协议拦截
+## 技术栈
 
-`ProtocolInterceptorService` 提供了基础的 HTTP 代理功能，可以：
-- 监听游戏请求
-- 记录协议数据
-- 修改请求/响应
-
-### 内存读取
-
-`MemoryReaderService` 提供了 Windows API 级别的内存读取：
-- 附加到游戏进程
-- 读取内存数据
-- 搜索内存模式
-
-## 常见问题
-
-### Q: Flash Player 未找到
-
-A: 将 `flashplayer_sa.exe` 放入 `Resources` 目录
-
-### Q: 无法登录
-
-A: 检查网络连接，确认账号密码正确
-
-### Q: 多开卡顿
-
-A: 减少同时运行的实例数量，或升级硬件
+- WPF (.NET 10)
+- Flash.ocx ActiveX（AtlAxWin + 激活上下文）
+- AES 加密（4399密码加密）
 
 ## License
 
