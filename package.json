@@ -1,0 +1,16 @@
+{
+  "name": "ddtanklauncher",
+  "version": "1.0.0",
+  "description": "基于 WPF (.NET 8) 的弹弹堂游戏登录器，支持 Flash 游戏运行、协议拦截、内存读取和多开。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}

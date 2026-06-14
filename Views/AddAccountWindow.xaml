@@ -1,0 +1,154 @@
+<Window x:Class="DDTankLauncher.Views.AddAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="添加账号" 
+        Height="520" Width="380"
+        WindowStartupLocation="CenterOwner"
+        Background="#1a1a2e"
+        ResizeMode="NoResize">
+    
+    <Window.Resources>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#16213e"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+        
+        <!-- ComboBox 完整样式 -->
+        <Style x:Key="DarkComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#0f3460"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="MinHeight" Value="38"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Name="ToggleButton"
+                                          Background="#0f3460"
+                                          BorderBrush="#333"
+                                          BorderThickness="1"
+                                          Focusable="False"
+                                          MinHeight="36"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding SelectedItem.Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                               Foreground="White"
+                                               VerticalAlignment="Center"
+                                               Margin="10,0,0,0"
+                                               FontSize="14"/>
+                                    <Path Name="Arrow"
+                                          Grid.Column="1"
+                                          Data="M 0 0 L 5 5 L 10 0 Z"
+                                          Fill="White"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Grid>
+                            </ToggleButton>
+                            <Popup Name="Popup"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                          MinHeight="36"
+                                   PopupAnimation="Slide">
+                                <Border Background="#0f3460"
+                                        BorderBrush="#333"
+                                        BorderThickness="1"
+                                        CornerRadius="0">
+                                    <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                                  VerticalScrollBarVisibility="Auto">
+                                        <StackPanel IsItemsHost="True"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- ComboBox 下拉项样式 -->
+        <Style x:Key="DarkComboBoxItem" TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#0f3460"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border Name="Border" Background="{TemplateBinding Background}" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#1a5276"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2980b9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="25">
+        <StackPanel>
+            <TextBlock Text="添加账号" FontSize="18" FontWeight="Bold"
+                       Foreground="White" Margin="0,0,0,20"/>
+            
+            <TextBlock Text="4399账号" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <TextBox x:Name="UsernameBox" Style="{StaticResource InputBox}"/>
+            
+            <TextBlock Text="密码" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <PasswordBox x:Name="PasswordBox" FontSize="14" Padding="10,8" Margin="0,0,0,12"
+                         Background="#16213e" Foreground="White" BorderBrush="#333"/>
+            
+            <TextBlock Text="区服" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <TextBox x:Name="ServerBox" Style="{StaticResource InputBox}" MaxLength="5"/>
+            
+            <TextBlock Text="备注（选填）" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <TextBox x:Name="RemarkBox" Style="{StaticResource InputBox}"/>
+            
+            <TextBlock Text="分组" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <ComboBox x:Name="GroupComboBox" Style="{StaticResource DarkComboBox}">
+                <ComboBoxItem Content="第一小组" IsSelected="True" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第二小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第三小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第四小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第五小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第六小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第七小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第八小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第九小组" Style="{StaticResource DarkComboBoxItem}"/>
+                <ComboBoxItem Content="第十小组" Style="{StaticResource DarkComboBoxItem}"/>
+            </ComboBox>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="一键导入36脚本大厅账号" MouseLeftButtonUp="Import36_Click"
+                           Foreground="#2196F3" FontSize="11" Cursor="Hand"
+                           VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <Button Content="取消" Click="Cancel_Click"
+                        Background="#666666" Foreground="White"
+                        BorderThickness="0" Padding="18,8" FontSize="13"
+                        Margin="0,0,10,0" Cursor="Hand"/>
+                <Button Content="保存" Click="Confirm_Click"
+                        Background="#4CAF50" Foreground="White"
+                        BorderThickness="0" Padding="18,8" FontSize="13"
+                        Cursor="Hand"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

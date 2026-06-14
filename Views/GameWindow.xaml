@@ -1,0 +1,9 @@
+<Window x:Class="DDTankLauncher.Views.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="游戏窗口"
+        Width="1000" Height="700"
+        WindowStartupLocation="CenterScreen"
+        Background="Black">
+    <Grid x:Name="GameContainer" />
+</Window>

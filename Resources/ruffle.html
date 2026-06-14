@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DDTank</title>
+    <style>
+        body { margin: 0; padding: 0; background: black; }
+        #player { width: 100%; height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="player"></div>
+    <script src="https://unpkg.com/@nickthecook/ruffle-core@0.1.0/dist/ruffle.js"></script>
+    <script>
+        // 获取URL参数
+        const params = new URLSearchParams(window.location.search);
+        const swfUrl = params.get('url');
+        
+        if (swfUrl) {
+            // 加载SWF
+            const ruffle = window.RufflePlayer;
+            const player = ruffle.createPlayer();
+            player.load(swfUrl);
+            document.getElementById('player').appendChild(player);
+        }
+    </script>
+</body>
+</html>

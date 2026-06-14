@@ -1,0 +1,10 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+node_modules/
+package-lock.json
+flash_debug.log
+switch_debug.log
+import_debug.log

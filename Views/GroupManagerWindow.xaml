@@ -1,0 +1,35 @@
+<Window x:Class="DDTankLauncher.Views.GroupManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="分组管理" Width="400" Height="300"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF2D2D30">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- 分组列表 -->
+        <ListBox Grid.Row="1" Name="GroupList" Margin="0,10"
+                 Background="#FF3F3F46" Foreground="White"
+                 SelectionMode="Single"/>
+        
+        <!-- 操作按钮 -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="添加分组" Click="AddGroup_Click" 
+                    Background="#FF007ACC" Foreground="White" 
+                    Padding="15,5" Margin="5"/>
+            <Button Content="重命名" Click="RenameGroup_Click" 
+                    Background="#FF007ACC" Foreground="White" 
+                    Padding="15,5" Margin="5"/>
+            <Button Content="删除分组" Click="DeleteGroup_Click" 
+                    Background="#FFD9534F" Foreground="White" 
+                    Padding="15,5" Margin="5"/>
+            <Button Content="关闭" Click="Close_Click" 
+                    Background="#FF555555" Foreground="White" 
+                    Padding="15,5" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
